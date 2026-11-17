@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ЕСКД CSV / DipTrace → PDF / XLSX (v19)</title>
+<title>ЕСКД CSV / DipTrace → PDF / XLSX (v21)</title>
 <script>/* jsPDF 2.5.2 (MIT), встроен для автономной работы */
 /** @license
  *
@@ -543,7 +543,7 @@ td.c{text-align:center;white-space:nowrap}
     <path d="M3 21h26M15 21v8M15 25h14M8 8h12M8 12h12M8 16h8"/>
   </svg>
   <div>
-    <h1>ЕСКД: перечень элементов и спецификация (v19)</h1>
+    <h1>ЕСКД: перечень элементов и спецификация (v21)</h1>
     <div class="sub">CSV или схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023</div>
   </div>
   <div class="sp"></div>
@@ -633,6 +633,7 @@ td.c{text-align:center;white-space:nowrap}
       <div class="seg"><label><input type="radio" name="spgroup" value="list"><span>Одним списком</span></label><label><input type="radio" name="spgroup" value="type" checked><span>По типам элементов</span></label></div></div>
     <div class="opt"><span class="k">Наименование ПЭ3</span>
       <div class="seg"><label><input type="radio" name="pename" value="full"><span>Полное</span></label><label><input type="radio" name="pename" value="short" checked><span>Сокращённое (ShortDesc)</span></label></div></div>
+    <div class="opt"><span class="k"></span><label class="chk" title="Только для ПЭ3 «Одним списком» с сокращённым наименованием: «Тип ShortDesc». При выводе по типам элементов тип добавляется только в разделе «Прочее»."><input id="pesdtype" type="checkbox" checked>При выводе ПЭ3 одним списком добавлять перед кратким описанием тип элемента</label></div>
     <div class="opt"><span class="k">Наименование СП</span>
       <div class="seg"><label><input type="radio" name="spname" value="full"><span>Полное</span></label><label><input type="radio" name="spname" value="short" checked><span>Сокращённое (ShortDesc)</span></label></div></div>
     <div class="opt"><span class="k">Иерархия схемы</span>
@@ -715,6 +716,9 @@ td.c{text-align:center;white-space:nowrap}
 <script>
 // ==== Мова інтерфейсу та документів (RU / UK) ====
 const UK = {
+"При выводе ПЭ3 одним списком добавлять перед кратким описанием тип элемента": "При виведенні ПЭ3 одним списком додавати перед коротким описом тип елемента",
+"Только для ПЭ3 «Одним списком» с сокращённым наименованием: «Тип ShortDesc». При выводе по типам элементов тип добавляется только в разделе «Прочее».": "Лише для ПЭ3 «Одним списком» зі скороченим найменуванням: «Тип ShortDesc». При виведенні за типами елементів тип додається лише в розділі «Інше».",
+
 "Формировать лист регистрации изменений (ЛРИ) в конце ПЭ3 и СП": "Формувати аркуш реєстрації змін (АРЗ) наприкінці ПЭ3 і СП",
 "ГОСТ Р 2.503-2023, прил. Б, форма 3. ЛРИ — последний лист, учитывается в графе «Листов» и в нумерации (PDF).": "ГОСТ Р 2.503-2023, дод. Б, форма 3. АРЗ — останній аркуш, враховується у графі «Аркушів» і в нумерації (PDF).",
 "Лист регистрации изменений по ГОСТ Р 2.503-2023, приложение Б, форма 3: помещается последним листом и входит в общее количество листов документа (п. Б.5). Строки 8 мм, основная надпись — как на последующих листах (форма 2а).": "Аркуш реєстрації змін за ГОСТ Р 2.503-2023, додаток Б, форма 3: розміщується останнім аркушем і входить до загальної кількості аркушів документа (п. Б.5). Рядки 8 мм, основний напис — як на наступних аркушах (форма 2а).",
@@ -745,8 +749,8 @@ const UK = {
 "Б — головная (контрольная) серия (МО)": "Б — головна (контрольна) серія (МО)",
 "И — единичное производство": "И — одиничне виробництво",
 
- 'ЕСКД: перечень элементов и спецификация (v19)':'ЄСКД: перелік елементів і специфікація (v19)',
- 'ЕСКД CSV / DipTrace → PDF / XLSX (v19)':'ЄСКД CSV / DipTrace → PDF / XLSX (v19)',
+ 'ЕСКД: перечень элементов и спецификация (v21)':'ЄСКД: перелік елементів і специфікація (v21)',
+ 'ЕСКД CSV / DipTrace → PDF / XLSX (v21)':'ЄСКД CSV / DipTrace → PDF / XLSX (v21)',
  'CSV или схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023':'CSV або схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023',
  'Arial вместо шрифта ГОСТ':'Arial замість шрифту ГОСТ',
  'BOM в CSV (разделитель «;», UTF-8 или Windows-1251) или схема DipTrace .dchxml':'BOM у CSV (роздільник «;», UTF-8 або Windows-1251) або схема DipTrace .dchxml',
@@ -871,6 +875,9 @@ const UKF = Object.entries({
 }).sort((a, b) => b[0].length - a[0].length);
 // Интерфейс на английском
 const EN = {
+"При выводе ПЭ3 одним списком добавлять перед кратким описанием тип элемента": "In a single-list ПЭ3, put the element type before the short description",
+"Только для ПЭ3 «Одним списком» с сокращённым наименованием: «Тип ShortDesc». При выводе по типам элементов тип добавляется только в разделе «Прочее».": "Only for ПЭ3 «Single list» with short names: «Type ShortDesc». When grouped by element type, the type is added only in the «Other» section.",
+
 "Формировать лист регистрации изменений (ЛРИ) в конце ПЭ3 и СП": "Add the change registration sheet (ЛРИ) at the end of ПЭ3 and СП",
 "ГОСТ Р 2.503-2023, прил. Б, форма 3. ЛРИ — последний лист, учитывается в графе «Листов» и в нумерации (PDF).": "GOST R 2.503-2023, annex Б, form 3. The sheet is placed last and counted in «Листов» and in sheet numbering (PDF).",
 "Лист регистрации изменений по ГОСТ Р 2.503-2023, приложение Б, форма 3: помещается последним листом и входит в общее количество листов документа (п. Б.5). Строки 8 мм, основная надпись — как на последующих листах (форма 2а).": "Change registration sheet per GOST R 2.503-2023, annex Б, form 3: placed as the last sheet and counted in the total number of sheets (cl. Б.5). Rows 8 mm, title block as on subsequent sheets (form 2a).",
@@ -900,8 +907,8 @@ const EN = {
 "Б — головная (контрольная) серия (МО)": "Б — lead (control) series (MoD)",
 "И — единичное производство": "И — single-unit production",
 
-"ЕСКД: перечень элементов и спецификация (v19)": "ESKD: list of elements and specification (v19)",
-"ЕСКД CSV / DipTrace → PDF / XLSX (v19)": "ESKD CSV / DipTrace → PDF / XLSX (v19)",
+"ЕСКД: перечень элементов и спецификация (v21)": "ESKD: list of elements and specification (v21)",
+"ЕСКД CSV / DipTrace → PDF / XLSX (v21)": "ESKD CSV / DipTrace → PDF / XLSX (v21)",
 "CSV или схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023": "CSV or DipTrace schematic (.dchxml) → PDF, XLSX, CSV · GOST 2.701-2008, GOST R 2.106-2019, GOST R 2.104-2023",
 "Arial вместо шрифта ГОСТ": "Arial instead of GOST font",
 "BOM в CSV (разделитель «;», UTF-8 или Windows-1251) или схема DipTrace .dchxml": "BOM as CSV (“;” separator, UTF-8 or Windows-1251) or DipTrace .dchxml schematic",
@@ -1285,6 +1292,26 @@ function nt(r){
 }
 const SD = 28;                                   // индекс поля ShortDesc в строке данных
 const shortName = s => (document.querySelector('input[name="' + (s ? 'spname' : 'pename') + '"]:checked') || {}).value === 'short';
+// ПЭ3 с ShortDesc: «Наименование» и «Примечание».
+//   примечание «Пусто»   → Наименование: ShortDesc;               Примечание: производитель
+//   примечание выбрано    → Наименование: ShortDesc производитель; Примечание: выбранное примечание
+//   тип элемента перед ShortDesc: по типам — только в разделе «Прочее»; одним списком — по переключателю
+const blankV = v => /^[\s\-–—]*$/.test(v) ? '' : v.trim();
+function peCells(g){
+  const r = g.r, sd = V(r, SD), notes = g.notes.join('; ');
+  if(!shortName(0) || !sd) return [nm(r, 0), notes];
+  const typ = blankV(V(r, 1)), man = blankV(V(r, 5));
+  const wantType = peByType() ? elType(g) === EL_TYPES.length - 1 : !!($('pesdtype') && $('pesdtype').checked);
+  const base = (wantType && typ && !normKey(sd).startsWith(normKey(typ)) ? typ + ' ' : '') + sd;
+  const hasMan = man && normKey(base).includes(normKey(man));   // производитель уже в ShortDesc — не дублируем
+  return $('note').value ? [base + (man && !hasMan ? ' ' + man : ''), notes] : [base, man];
+}
+// СП с ShortDesc и примечанием «Пусто»: Наименование — ShortDesc, Примечание — производитель
+function spCells(g){
+  const r = g.r, notes = g.notes.join('; ');
+  if(!shortName(1) || !V(r, SD) || $('note').value) return [nm(r, 1), notes];
+  return [nm(r, 1), blankV(V(r, 5))];
+}
 function nm(r,s){
   if(shortName(s) && V(r,SD)) return V(r,SD);
   return (s?'':V(r,1)+' ') + V(r,4) + D(', Произв. ') + V(r,5) + ' (' + V(r,6) + '), p/n ' + V(r,7);
@@ -1550,14 +1577,13 @@ function rows(s){
     const gs = specGroups();
     return (spByType() ? byTypes(gs, x => x) : gs).map(g => g.hdr
       ? Object.assign(['','','','',g.hdr,'',''], {hdr: g.hdr})
-      : g.frag ? ['','',g.frag,V(g.r,1),nm(g.r,1),String(g.qty),g.notes.join('; ')]
-      : ['','',compress(g.des),V(g.r,1),nm(g.r,1),String(qtyOf(g)),g.notes.join('; ')]);
+      : (c => ['','',g.frag || compress(g.des),V(g.r,1),c[0],String(g.frag ? g.qty : qtyOf(g)),c[1]])(spCells(g)));
   }
   return listRows().map(e => e.blank ? ['', '', '', '']
                     : e.grp ? Object.assign([compress(e.grp.labels, true), e.hdr, String(e.grp.n), ''], {hdr: e.hdr, grp: true})
                     : e.hdr ? Object.assign(['', e.hdr, '', ''], {hdr: e.hdr})
-                    : [e.des.length ? compress(e.des) : V(e.g.r,0), nm(e.g.r,0),
-                       String(e.des.length || qtyOf(e.g)), e.g.notes.join('; ')]);
+                    : (c => [e.des.length ? compress(e.des) : V(e.g.r,0), c[0],
+                       String(e.des.length || qtyOf(e.g)), c[1]])(peCells(e.g)));
 }
 const J = x => Array.isArray(x) ? x.join(', ') : String(x);
 function view(){
@@ -1783,6 +1809,7 @@ $('csv').onchange = async e => {
   } catch(e){ $('state').textContent = e.message; }
 };
 $('note').onchange = view;
+$('pesdtype').onchange = view;
 $('excl').onchange = () => { applyExcl(); view(); };
 $('litsel').onchange = $('lit').oninput = () => { updLit(); view(); };
 document.querySelectorAll('input[name="pegroup"],input[name="spgroup"],input[name="pename"],input[name="spname"],input[name="hmode"],input[name="desfit"]').forEach(x => x.onchange = view);
@@ -2085,7 +2112,10 @@ function f2a(d, m, p, n, isSpec, isLri){
   (function(){
     d.setFontSize(FS_STAMP);
     // Если лист один — только «Листов 1» по центру графы
-    d.text(String(p), 196, y+9, {align:'center'});   // гр. 7 — только номер листа
+    const fsN = FS_STAMP * 1.4;                      // номер листа на 40 % крупнее
+    d.setFontSize(fsN);
+    d.text(String(p), 196, y + 7.5 + fsN * 0.353 * 0.36, {align:'center'});   // гр. 7 — только номер листа
+    d.setFontSize(FS_STAMP);
   })();
 
   // Дублирование «Разработал/Фамилия» и «Дата» — выше блока изменений
@@ -2285,6 +2315,7 @@ function pdf(spec, fill, pass){
       // межбуквенный интервал минимальный. Разбиваем текст через \n,
       // чтобы обойти splitTextToSize (который пакует по 2 буквы).
       if(XSMALL_COLS.indexOf(data.column.index) !== -1){
+        data.cell.styles.halign = 'center';            // «Формат», «Зона» — по центру графы
         data.cell.styles.minCellHeight = 0;
         data.cell.styles.cellPadding = { top: 0.15, right: 0.15, bottom: 0.15, left: 0.15 };
         // Разбиваем все строки побуквенно
@@ -2875,6 +2906,7 @@ $('xmlout').onclick = () => {
   a.push('<xarial>' + ($('xarial').checked ? 1 : 0) + '</xarial>');
   XK.forEach(k => a.push('<' + k + '>' + ($(k).checked ? 1 : 0) + '</' + k + '>'));
   a.push('<lri>' + ($('lri').checked ? 1 : 0) + '</lri>');
+  a.push('<pesdtype>' + ($('pesdtype').checked ? 1 : 0) + '</pesdtype>');
   a.push('<xtext>' + xe($('xtext').value) + '</xtext>');
   a.push('<xfname>' + xe($('xfname').dataset.manual === '1' ? $('xfname').value : '') + '</xfname>');
   a.push('</eskd>');
@@ -2898,6 +2930,7 @@ $('xmlin').onchange = async e => {
   if(nm0 && nm0 !== 'Arial'){ $('xfname').value = nm0; $('xfname').dataset.manual = '1'; } else $('xfname').dataset.manual = '';
   XK.forEach(k => { const v = x.querySelector(k); if(v) $(k).checked = v.textContent.trim() === '1'; });
   { const v = x.querySelector('lri'); if(v) $('lri').checked = v.textContent.trim() === '1'; }
+  { const v = x.querySelector('pesdtype'); if(v) $('pesdtype').checked = v.textContent.trim() === '1'; }
   const xt = x.querySelector('xtext'); if(xt) $('xtext').value = xt.textContent;
   const ex = x.querySelector('excl'); if(ex){ $('excl').checked = ex.textContent.trim() === '1'; applyExcl(); }
   if(!$('litsel').value) $('litsel').value = 'src';
