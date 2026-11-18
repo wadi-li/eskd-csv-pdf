@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ЕСКД CSV / DipTrace → PDF / XLSX (v22)</title>
+<title>ЕСКД CSV / DipTrace → PDF / XLSX (v23)</title>
 <script>/* jsPDF 2.5.2 (MIT), встроен для автономной работы */
 /** @license
  *
@@ -543,7 +543,7 @@ td.c{text-align:center;white-space:nowrap}
     <path d="M3 21h26M15 21v8M15 25h14M8 8h12M8 12h12M8 16h8"/>
   </svg>
   <div>
-    <h1>ЕСКД: перечень элементов и спецификация (v22)</h1>
+    <h1>ЕСКД: перечень элементов и спецификация (v23)</h1>
     <div class="sub">CSV или схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023</div>
   </div>
   <div class="sp"></div>
@@ -635,7 +635,7 @@ td.c{text-align:center;white-space:nowrap}
       <select id="pename"><option value="pn">p/n</option><option value="pnsd" selected>p/n + ShortDesc</option><option value="pnsdm">p/n + ShortDesc + Производитель</option><option value="full">Полное (старый алгоритм)</option></select></div>
     <div class="opt"><span class="k"></span><label class="chk" title="Для ПЭ3 «Одним списком» с наименованием p/n, p/n + ShortDesc или p/n + ShortDesc + Производитель: тип элемента ставится в начале. При выводе по типам элементов тип добавляется только в разделе «Прочие изделия»."><input id="pesdtype" type="checkbox" checked>При выводе ПЭ3 одним списком добавлять перед кратким описанием тип элемента</label></div>
     <div class="opt"><span class="k">Наименование СП</span>
-      <div class="seg"><label><input type="radio" name="spname" value="full"><span>Полное</span></label><label><input type="radio" name="spname" value="short" checked><span>Сокращённое (ShortDesc)</span></label></div></div>
+      <select id="spname"><option value="pn">p/n</option><option value="pnsd">p/n, ShortDesc</option><option value="pnsdm">p/n, ShortDesc, Производитель</option><option value="pnpar" selected>p/n + (ShortDesc, Производитель)</option></select></div>
     <div class="opt"><span class="k">Иерархия схемы</span>
       <div class="seg"><label><input type="radio" name="hmode" value="grp" checked><span>Функц. группы</span></label><label><input type="radio" name="hmode" value="flat"><span>Сквозной (A1-R1)</span></label></div></div>
     <div class="hint" style="margin:-2px 0 6px">Для схем DipTrace с иерархическими блоками. Функциональные группы — по ГОСТ 2.701-2008 п. 5.7.7 и ГОСТ 2.702-2011 п. 5.3.13: обозначения внутри одинаковых групп повторяются, элементы группы записываются отдельным разделом с подчёркнутым заголовком, количество — на одну группу, число групп — в строке заголовка. Сквозной список — каждый физический элемент с полным обозначением по ГОСТ 2.710 (A1-A3-R5). В спецификации количество всегда считается по физическим элементам.</div>
@@ -644,7 +644,7 @@ td.c{text-align:center;white-space:nowrap}
     <div class="opt"><span class="k">Длинные обозначения</span>
       <div class="seg"><label><input type="radio" name="desfit" value="wrap"><span>Переносить</span></label><label><input type="radio" name="desfit" value="shrink" checked><span>Уменьшать шрифт</span></label></div></div>
     <div class="hint" style="margin:-2px 0 6px">Формат подблока — запись составного обозначения в сквозном списке и обозначений групп. A1-A4-R5 — по ГОСТ 2.710; остальные варианты — внутренние соглашения предприятия. «Уменьшать шрифт»: если обозначение (или диапазон) не помещается в ширину графы, кегль этой ячейки уменьшается, но не ниже 1,8 мм для шрифта типа Б и 2,5 мм для типа А (ГОСТ 2.304-81 п. 2.2); если и так не помещается — перенос.</div>
-    <div class="hint" style="margin:-2px 0 6px">Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: «Сокращённое» — поле ShortDesc (доп. поле компонента DipTrace или столбец ShortDesc в CSV), при пустом ShortDesc — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.</div>
+    <div class="hint" style="margin:-2px 0 6px">Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: p/n; p/n, ShortDesc; p/n, ShortDesc, Производитель; p/n + (ShortDesc, Производитель) — по умолчанию, в том числе при выборе непустого примечания; если p/n и ShortDesc пусты — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.</div>
     <div class="opt"><span class="k">Диапазоны</span>
       <select id="rng"><option value="dash">C11 - C15</option><option value="dots">C11...C15 (как в примере ГОСТ 2.701)</option></select></div>
     <div class="opt"><span class="k">Примечание</span>
@@ -716,10 +716,15 @@ td.c{text-align:center;white-space:nowrap}
 <script>
 // ==== Мова інтерфейсу та документів (RU / UK) ====
 const UK = {
+"ShortDesc не заполнено (выведен p/n; если пуст и p/n — полная запись): ": "ShortDesc не заповнено (виведено p/n; якщо порожній і p/n — повний запис): ",
+
+"p/n, ShortDesc, Производитель": "p/n, ShortDesc, Виробник",
+"p/n + (ShortDesc, Производитель)": "p/n + (ShortDesc, Виробник)",
+
 "ShortDesc не заполнено (в ПЭ3 — без ShortDesc, в СП — полная запись): ": "ShortDesc не заповнено (у ПЭ3 — без ShortDesc, у СП — повний запис): ",
 
 "Для ПЭ3 «Одним списком» с наименованием p/n, p/n + ShortDesc или p/n + ShortDesc + Производитель: тип элемента ставится в начале. При выводе по типам элементов тип добавляется только в разделе «Прочие изделия».": "Для ПЭ3 «Одним списком» з найменуванням p/n, p/n + ShortDesc або p/n + ShortDesc + Виробник: тип елемента ставиться на початку. При виведенні за типами елементів тип додається лише в розділі «Інші вироби».",
-"Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: «Сокращённое» — поле ShortDesc (доп. поле компонента DipTrace или столбец ShortDesc в CSV), при пустом ShortDesc — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.": "Найменування ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Виробник; «Повне» — тип, опис, виробник, країна, p/n. Порожні поля пропускаються, повтор тексту, який уже є в записі, не додається; якщо p/n і ShortDesc порожні — повний запис. Найменування СП: «Скорочене» — поле ShortDesc (дод. поле компонента DipTrace або стовпець ShortDesc у CSV), при порожньому ShortDesc — повний запис. Примітка діє на ПЭ3 і СП; «Корпус» — ім’я посадкового місця, «Ім’я файлу 3D моделі» — з посадкового місця схеми .dchxml.",
+"Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: p/n; p/n, ShortDesc; p/n, ShortDesc, Производитель; p/n + (ShortDesc, Производитель) — по умолчанию, в том числе при выборе непустого примечания; если p/n и ShortDesc пусты — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.": "Найменування ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Виробник; «Повне» — тип, опис, виробник, країна, p/n. Порожні поля пропускаються, повтор тексту, який уже є в записі, не додається; якщо p/n і ShortDesc порожні — повний запис. Найменування СП: p/n; p/n, ShortDesc; p/n, ShortDesc, Виробник; p/n + (ShortDesc, Виробник) — типово, зокрема при виборі непорожньої примітки; якщо p/n і ShortDesc порожні — повний запис. Примітка діє на ПЭ3 і СП; «Корпус» — ім’я посадкового місця, «Ім’я файлу 3D моделі» — з посадкового місця схеми .dchxml.",
 "p/n + ShortDesc + Производитель": "p/n + ShortDesc + Виробник",
 "Полное (старый алгоритм)": "Повне (старий алгоритм)",
 "Производитель": "Виробник",
@@ -760,8 +765,8 @@ const UK = {
 "Б — головная (контрольная) серия (МО)": "Б — головна (контрольна) серія (МО)",
 "И — единичное производство": "И — одиничне виробництво",
 
- 'ЕСКД: перечень элементов и спецификация (v22)':'ЄСКД: перелік елементів і специфікація (v22)',
- 'ЕСКД CSV / DipTrace → PDF / XLSX (v22)':'ЄСКД CSV / DipTrace → PDF / XLSX (v22)',
+ 'ЕСКД: перечень элементов и спецификация (v23)':'ЄСКД: перелік елементів і специфікація (v23)',
+ 'ЕСКД CSV / DipTrace → PDF / XLSX (v23)':'ЄСКД CSV / DipTrace → PDF / XLSX (v23)',
  'CSV или схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023':'CSV або схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023',
  'Arial вместо шрифта ГОСТ':'Arial замість шрифту ГОСТ',
  'BOM в CSV (разделитель «;», UTF-8 или Windows-1251) или схема DipTrace .dchxml':'BOM у CSV (роздільник «;», UTF-8 або Windows-1251) або схема DipTrace .dchxml',
@@ -790,7 +795,7 @@ const UK = {
  'Шрифт и начертание действуют и на PDF, и на XLSX.':'Шрифт і накреслення діють і на PDF, і на XLSX.',
  'Язык документов':'Мова документів', 'Наименование ПЭ3':'Найменування ПЕ3', 'Наименование СП':'Найменування СП',
  'Полное':'Повне', 'Сокращённое (ShortDesc)':'Скорочене (ShortDesc)',
- 'Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: «Сокращённое» — поле ShortDesc (доп. поле компонента DipTrace или столбец ShortDesc в CSV), при пустом ShortDesc — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.':'Повне: тип, опис, виробник, країна, p/n. Скорочене: лише поле ShortDesc (дод. поле компонента DipTrace або стовпець ShortDesc у CSV); якщо ShortDesc порожнє, лишається повний запис.', 'Язык интерфейса':'Мова інтерфейсу',
+ 'Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: p/n; p/n, ShortDesc; p/n, ShortDesc, Производитель; p/n + (ShortDesc, Производитель) — по умолчанию, в том числе при выборе непустого примечания; если p/n и ShortDesc пусты — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.':'Повне: тип, опис, виробник, країна, p/n. Скорочене: лише поле ShortDesc (дод. поле компонента DipTrace або стовпець ShortDesc у CSV); якщо ShortDesc порожнє, лишається повний запис.', 'Язык интерфейса':'Мова інтерфейсу',
  'Шрифт, начертание и язык действуют и на PDF, и на XLSX.':'Шрифт, накреслення і мова діють і на PDF, і на XLSX.',
  'Переключить тему':'Перемкнути тему', 'Тёмная тема':'Темна тема', 'Светлая тема':'Світла тема',
  'Шифр, наименование, организация, фамилии, дата, литера и первичное применение берутся из основной надписи первого листа схемы':'Шифр, найменування, організація, прізвища, дата, літера і первинне застосування беруться з основного напису першого аркуша схеми',
@@ -886,10 +891,15 @@ const UKF = Object.entries({
 }).sort((a, b) => b[0].length - a[0].length);
 // Интерфейс на английском
 const EN = {
+"ShortDesc не заполнено (выведен p/n; если пуст и p/n — полная запись): ": "ShortDesc is empty (p/n shown; full entry if p/n is empty too): ",
+
+"p/n, ShortDesc, Производитель": "p/n, ShortDesc, Manufacturer",
+"p/n + (ShortDesc, Производитель)": "p/n + (ShortDesc, Manufacturer)",
+
 "ShortDesc не заполнено (в ПЭ3 — без ShortDesc, в СП — полная запись): ": "ShortDesc is empty (ПЭ3 without ShortDesc, СП full entry): ",
 
 "Для ПЭ3 «Одним списком» с наименованием p/n, p/n + ShortDesc или p/n + ShortDesc + Производитель: тип элемента ставится в начале. При выводе по типам элементов тип добавляется только в разделе «Прочие изделия».": "For a single-list ПЭ3 named p/n, p/n + ShortDesc or p/n + ShortDesc + Manufacturer, the element type goes first. When grouped by element type, the type is added only in the «Other items» section.",
-"Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: «Сокращённое» — поле ShortDesc (доп. поле компонента DipTrace или столбец ShortDesc в CSV), при пустом ShortDesc — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.": "ПЭ3 name: p/n; p/n + ShortDesc; p/n + ShortDesc + Manufacturer; «Full» — type, description, manufacturer, country, p/n. Empty fields are skipped and text already present in the entry is not repeated; if both p/n and ShortDesc are empty, the full entry is used. СП name: «Short» — the ShortDesc field (DipTrace component additional field or ShortDesc CSV column), full entry if ShortDesc is empty. The note applies to both ПЭ3 and СП; «Package» is the pattern name, «3D model file name» comes from the .dchxml pattern.",
+"Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: p/n; p/n, ShortDesc; p/n, ShortDesc, Производитель; p/n + (ShortDesc, Производитель) — по умолчанию, в том числе при выборе непустого примечания; если p/n и ShortDesc пусты — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.": "ПЭ3 name: p/n; p/n + ShortDesc; p/n + ShortDesc + Manufacturer; «Full» — type, description, manufacturer, country, p/n. Empty fields are skipped and text already present in the entry is not repeated; if both p/n and ShortDesc are empty, the full entry is used. СП name: p/n; p/n, ShortDesc; p/n, ShortDesc, Manufacturer; p/n + (ShortDesc, Manufacturer) — the default, also when a non-empty note is selected; full entry if both p/n and ShortDesc are empty. The note applies to both ПЭ3 and СП; «Package» is the pattern name, «3D model file name» comes from the .dchxml pattern.",
 "p/n + ShortDesc + Производитель": "p/n + ShortDesc + Manufacturer",
 "Полное (старый алгоритм)": "Full (previous algorithm)",
 "Производитель": "Manufacturer",
@@ -929,8 +939,8 @@ const EN = {
 "Б — головная (контрольная) серия (МО)": "Б — lead (control) series (MoD)",
 "И — единичное производство": "И — single-unit production",
 
-"ЕСКД: перечень элементов и спецификация (v22)": "ESKD: list of elements and specification (v22)",
-"ЕСКД CSV / DipTrace → PDF / XLSX (v22)": "ESKD CSV / DipTrace → PDF / XLSX (v22)",
+"ЕСКД: перечень элементов и спецификация (v23)": "ESKD: list of elements and specification (v23)",
+"ЕСКД CSV / DipTrace → PDF / XLSX (v23)": "ESKD CSV / DipTrace → PDF / XLSX (v23)",
 "CSV или схема DipTrace (.dchxml) → PDF, XLSX, CSV · ГОСТ 2.701-2008, ГОСТ Р 2.106-2019, ГОСТ Р 2.104-2023": "CSV or DipTrace schematic (.dchxml) → PDF, XLSX, CSV · GOST 2.701-2008, GOST R 2.106-2019, GOST R 2.104-2023",
 "Arial вместо шрифта ГОСТ": "Arial instead of GOST font",
 "BOM в CSV (разделитель «;», UTF-8 или Windows-1251) или схема DipTrace .dchxml": "BOM as CSV (“;” separator, UTF-8 or Windows-1251) or DipTrace .dchxml schematic",
@@ -992,7 +1002,7 @@ const EN = {
 "Наименование СП": "Specification name",
 "Полное": "Full",
 "Сокращённое (ShortDesc)": "Short (ShortDesc)",
-"Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: «Сокращённое» — поле ShortDesc (доп. поле компонента DipTrace или столбец ShortDesc в CSV), при пустом ShortDesc — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.": "Full: type, description, manufacturer, country, p/n. Short: ShortDesc field only (DipTrace component additional field or ShortDesc column in CSV); if ShortDesc is empty, the full entry is kept.",
+"Наименование ПЭ3: p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; «Полное» — тип, описание, производитель, страна, p/n. Пустые поля пропускаются, повтор уже имеющегося в записи текста не добавляется; если p/n и ShortDesc пусты — полная запись. Наименование СП: p/n; p/n, ShortDesc; p/n, ShortDesc, Производитель; p/n + (ShortDesc, Производитель) — по умолчанию, в том числе при выборе непустого примечания; если p/n и ShortDesc пусты — полная запись. Примечание действует на ПЭ3 и СП; «Корпус» — имя посадочного места, «Имя файла 3D модели» — из посадочного места схемы .dchxml.": "Full: type, description, manufacturer, country, p/n. Short: ShortDesc field only (DipTrace component additional field or ShortDesc column in CSV); if ShortDesc is empty, the full entry is kept.",
 "Язык интерфейса": "Interface language",
 "Шрифт, начертание и язык действуют и на PDF, и на XLSX.": "Font, style and language apply to both PDF and XLSX.",
 "Переключить тему": "Toggle theme",
@@ -1320,7 +1330,7 @@ function nt(r){
 const M3D = 29;                                  // индекс имени файла 3D-модели (из посадочного места .dchxml)
 // Склейка частей через пробел без повторов: часть, уже содержащаяся в записи, не добавляется
 // и уже включённые части вырезаются из следующих (p/n внутри ShortDesc не повторяется)
-function joinU(parts){
+function joinU(parts, sep = ' '){
   const esc = t => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   let out = '';
   const used = [];
@@ -1330,13 +1340,13 @@ function joinU(parts){
     used.forEach(u => { x = x.replace(new RegExp('(^|[\\s,;(])' + esc(u) + '(?=$|[\\s,;)])', 'gi'), '$1'); });
     x = x.replace(/\(\s*\)/g, '').replace(/\s*[,;]\s*(?=[,;]|$)/g, '').replace(/^[\s,;]+|[\s,;]+$/g, '').replace(/\s{2,}/g, ' ');
     used.push(x0);
-    if(x) out = out ? out + ' ' + x : x;
+    if(x) out = out ? out + sep + x : x;
   });
   return out;
 }
 const SD = 28;                                   // индекс поля ShortDesc в строке данных
 const peName = () => $('pename').value;          // pn | pnsd | pnsdm | full
-const shortName = s => s ? (document.querySelector('input[name="spname"]:checked') || {}).value === 'short'
+const shortName = s => s ? $('spname').value !== 'pn'
                          : /sd/.test(peName());
 const blankV = v => /^[\s\-–—]*$/.test(v) ? '' : v.trim();
 // ПЭ3: «Наименование» по меню (p/n; p/n + ShortDesc; p/n + ShortDesc + Производитель; полное),
@@ -1351,7 +1361,19 @@ function peCells(g){
   const wantType = peByType() ? elType(g, 0) === EL_TYPES.length - 1 : $('pesdtype').checked;
   return [wantType && typ && !normKey(body).startsWith(normKey(typ)) ? typ + ' ' + body : body, notes];
 }
-function spCells(g){ return [nm(g.r, 1), g.notes.join('; ')]; }
+// СП: «Наименование» по меню: p/n; p/n, ShortDesc; p/n, ShortDesc, Производитель; p/n (ShortDesc, Производитель)
+function spCells(g){
+  const r = g.r, notes = g.notes.join('; '), m = $('spname').value;
+  const pn = blankV(V(r, 7)), sd = blankV(V(r, SD)), man = blankV(V(r, 5));
+  if(!pn && !sd) return [nm(r, 1), notes];
+  if(m === 'pnpar'){
+    // ShortDesc и производитель без повтора p/n; в скобках после p/n
+    const all = joinU([pn, sd, man], ', ');           // p/n уже вырезан из ShortDesc
+    const inner = pn ? all.slice(pn.length).replace(/^[\s,;]+/, '') : all;
+    return [pn ? (inner ? pn + ' (' + inner + ')' : pn) : inner, notes];
+  }
+  return [joinU([pn, m !== 'pn' ? sd : '', m === 'pnsdm' ? man : ''], ', '), notes];
+}
 function nm(r,s){
   if(shortName(s) && V(r,SD)) return V(r,SD);
   return (s?'':V(r,1)+' ') + V(r,4) + D(', Произв. ') + V(r,5) + ' (' + V(r,6) + '), p/n ' + V(r,7);
@@ -1615,7 +1637,7 @@ function checkQty(){
   if(shortName(0) || shortName(1)){
     const gs = groups(), miss = gs.filter(g => !V(g.r, SD));
     if(miss.length === gs.length) w.push('Поле ShortDesc не найдено ни у одного элемента — оставлена полная запись наименования');
-    else if(miss.length) w.push((shortName(0) ? 'ShortDesc не заполнено (в ПЭ3 — без ShortDesc, в СП — полная запись): ' : 'ShortDesc не заполнено (оставлена полная запись): ') + compress(miss.flatMap(g => g.des).sort(cmpDes)).join(', '));
+    else if(miss.length) w.push((peName() !== 'full' ? 'ShortDesc не заполнено (выведен p/n; если пуст и p/n — полная запись): ' : 'ShortDesc не заполнено (оставлена полная запись): ') + compress(miss.flatMap(g => g.des).sort(cmpDes)).join(', '));
   }
   return w;
 }
@@ -1860,12 +1882,15 @@ $('csv').onchange = async e => {
     view();
   } catch(e){ $('state').textContent = e.message; }
 };
-$('note').onchange = view;
+$('note').onchange = () => {   // для непустого примечания по умолчанию — p/n + (ShortDesc, Производитель)
+  if($('note').value && $('spname').dataset.manual !== '1') $('spname').value = 'pnpar';
+  view(); };
 $('pesdtype').onchange = view;
 $('pename').onchange = view;
+$('spname').onchange = () => { $('spname').dataset.manual = '1'; view(); };
 $('excl').onchange = () => { applyExcl(); view(); };
 $('litsel').onchange = $('lit').oninput = () => { updLit(); view(); };
-document.querySelectorAll('input[name="pegroup"],input[name="spgroup"],input[name="spname"],input[name="hmode"],input[name="desfit"]').forEach(x => x.onchange = view);
+document.querySelectorAll('input[name="pegroup"],input[name="spgroup"],input[name="hmode"],input[name="desfit"]').forEach(x => x.onchange = view);
 $('rng').onchange = view; $('hfmt').onchange = view;
 
 function M(){ let m={}; F.forEach(k => m[k] = $(k).value); m.lit = litEff(); return m; }
@@ -2955,12 +2980,13 @@ $('xmlout').onclick = () => {
   a.push('<excl>' + ($('excl').checked ? 1 : 0) + '</excl>');
   a.push('<ftype>' + document.querySelector('input[name="ftype"]:checked').value + '</ftype>');
   a.push('<fslant>' + document.querySelector('input[name="fslant"]:checked').value + '</fslant>');
-  ['pegroup','spgroup','spname','hmode','desfit','doclang','uilang'].forEach(k => a.push('<' + k + '>' + radio(k) + '</' + k + '>'));
+  ['pegroup','spgroup','hmode','desfit','doclang','uilang'].forEach(k => a.push('<' + k + '>' + radio(k) + '</' + k + '>'));
   a.push('<xarial>' + ($('xarial').checked ? 1 : 0) + '</xarial>');
   XK.forEach(k => a.push('<' + k + '>' + ($(k).checked ? 1 : 0) + '</' + k + '>'));
   a.push('<lri>' + ($('lri').checked ? 1 : 0) + '</lri>');
   a.push('<pesdtype>' + ($('pesdtype').checked ? 1 : 0) + '</pesdtype>');
   a.push('<pename>' + $('pename').value + '</pename>');
+  a.push('<spname>' + $('spname').value + '</spname>');
   a.push('<xtext>' + xe($('xtext').value) + '</xtext>');
   a.push('<xfname>' + xe($('xfname').dataset.manual === '1' ? $('xfname').value : '') + '</xfname>');
   a.push('</eskd>');
@@ -2970,7 +2996,7 @@ $('xmlout').onclick = () => {
 $('xmlin').onchange = async e => {
   let x = new DOMParser().parseFromString(await e.target.files[0].text(), 'text/xml');
   F.forEach(k => { let v = x.querySelector(k); if(v) $(k).value = v.textContent; });
-  for(const key of ['ftype','fslant','pegroup','spgroup','spname','hmode','desfit','doclang']){
+  for(const key of ['ftype','fslant','pegroup','spgroup','hmode','desfit','doclang']){
     const v = x.querySelector(key);
     if(v){
       const r = document.querySelector('input[name="'+key+'"][value="'+v.textContent.trim()+'"]');
@@ -2985,6 +3011,8 @@ $('xmlin').onchange = async e => {
   XK.forEach(k => { const v = x.querySelector(k); if(v) $(k).checked = v.textContent.trim() === '1'; });
   { const v = x.querySelector('lri'); if(v) $('lri').checked = v.textContent.trim() === '1'; }
   { const v = x.querySelector('pesdtype'); if(v) $('pesdtype').checked = v.textContent.trim() === '1'; }
+  { const v = x.querySelector('spname'); if(v){ const t = v.textContent.trim();   // совместимость: full | short (до v23)
+      $('spname').value = [...$('spname').options].some(o => o.value === t) ? t : 'pnpar'; $('spname').dataset.manual = '1'; } }
   { const v = x.querySelector('pename'); if(v){ const t = v.textContent.trim();   // совместимость: full | short (до v22)
       $('pename').value = t === 'short' ? 'pnsd' : [...$('pename').options].some(o => o.value === t) ? t : 'pnsd'; } }
   const xt = x.querySelector('xtext'); if(xt) $('xtext').value = xt.textContent;
