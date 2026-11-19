@@ -1,4 +1,4 @@
-# Инструмент генерации перечня элементов ПЭ3 и спецификации СП для комплектации и/или закупки из схемы DipTrace. Множество гибких параметров настройки вывода позволяют формировать документы с разными опциями.
+# Генерация ПЭ3, СП из dchxml сразу в ЕСКД  → PDF, XLSX, CSV
 
 ## Постоянное название проекта
 
@@ -6,10 +6,10 @@
 
 | Язык | Название |
 | --- | --- |
-| RU | Генерация перечня элементов спецификации из схемы DipTrace |
-| UA | Генерація переліку елементів і специфікації зі схеми DipTrace |
-| EN | Generate parts lists and specifications from a DipTrace schematic |
-| FRA | Génération de nomenclatures et spécifications depuis un schéma DipTrace |
+| RU | Генерация ПЭ3, СП из dchxml сразу в ЕСКД  → PDF, XLSX, CSV |
+| UA | Генерація ПЕ3, СП із dchxml одразу за ЄСКД  → PDF, XLSX, CSV |
+| EN | Generate ESKD PE3 and SP from dchxml  → PDF, XLSX, CSV |
+| FRA | Générer les documents ESKD PE3 et SP depuis dchxml  → PDF, XLSX, CSV |
 
 
 Автономный HTML-инструмент (один файл, без сборки и без интернета) для выпуска перечня элементов (ПЭ3) и спецификации (СП) по ЕСКД из BOM в CSV или схемы DipTrace `.dchxml`.
